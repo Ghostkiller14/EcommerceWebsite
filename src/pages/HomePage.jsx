@@ -15,6 +15,7 @@ const HomePage = () => {
 
   return (
     <div>
+  
       <Products products={products} />
     </div>
   );

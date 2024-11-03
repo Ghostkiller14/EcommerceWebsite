@@ -1,5 +1,4 @@
 import AdbIcon from "@mui/icons-material/Adb";
-import MenuIcon from "@mui/icons-material/Menu";
 import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
@@ -12,18 +11,19 @@ import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import { Link } from "react-router-dom";
 
 const pages = [
-  { name: "HomePage", path: "/HomePage" },
   { name: "Pricing", path: "/pricing" },
   { name: "Blog", path: "/blog" },
+  //{ name: "s", path: "/blog" },
 ];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function NavbarLayout() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [isAuthenticated, setIsAuthenticated] = React.useState(false);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -62,7 +62,7 @@ function NavbarLayout() {
               variant="h6"
               noWrap
               component="a"
-              href="#app-bar-with-responsive-menu"
+              href="#"
               sx={{
                 fontFamily: "monospace",
                 fontWeight: 700,
@@ -76,112 +76,125 @@ function NavbarLayout() {
             </Typography>
           </Box>
 
-          {/* Responsive Menu Icon for Mobile */}
-          <Box sx={{ display: { xs: "flex", md: "none" }, flexGrow: 1 }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
+          {/* HomePage link always displayed */}
+          <Box sx={{ display: { xs: "none", md: "flex" }, gap: 2, mr: 2 }}>
+            <Button
+              component={Link}
+              to="/HomePage"
               sx={{
-                display: { xs: "block", md: "none" },
+                color: "white",
+                fontSize: "1rem",
+                "&:hover": {
+                  backgroundColor: "rgba(255, 255, 255, 0.1)",
+                },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page.name} onClick={handleCloseNavMenu}>
-                  <Typography
-                    component={Link}
-                    to={page.path}
-                    sx={{ textDecoration: "none", color: "black" }}
-                  >
-                    {page.name}
-                  </Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+              HomePage
+            </Button>
           </Box>
 
-          {/* Center-aligned Links for Desktop */}
-          <Box
-            sx={{
-              display: { xs: "none", md: "flex" },
-              flexGrow: 1,
-              justifyContent: "center",
-              gap: 2,
-            }}
-          >
-            {pages.map((page) => (
-              <Button
-                key={page.name}
-                component={Link}
-                to={page.path}
-                onClick={handleCloseNavMenu}
+          {/* Conditionally render based on authentication status */}
+          {isAuthenticated ? (
+            <>
+              {/* Regular Navbar for Authenticated Users */}
+              <Box
                 sx={{
-                  color: "white",
-                  fontSize: "1rem",
-                  "&:hover": {
-                    backgroundColor: "rgba(255, 255, 255, 0.1)",
-                  },
+                  display: { xs: "none", md: "flex" },
+                  flexGrow: 1,
+                  justifyContent: "center",
+                  gap: 2,
                 }}
               >
-                {page.name}
-              </Button>
-            ))}
-          </Box>
+                {pages.map((page) => (
+                  <Button
+                    key={page.name}
+                    component={Link}
+                    to={page.path}
+                    onClick={handleCloseNavMenu}
+                    sx={{
+                      color: "white",
+                      fontSize: "1rem",
+                      "&:hover": {
+                        backgroundColor: "rgba(255, 255, 255, 0.1)",
+                      },
+                    }}
+                  >
+                    {page.name}
+                  </Button>
+                ))}
+              </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton
-                onClick={handleOpenUserMenu}
-                sx={{ p: 0, border: "2px solid #fff" }}
-              >
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography sx={{ textAlign: "center" }}>
-                    {setting}
-                  </Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+              <Box sx={{ flexGrow: 0 }}>
+                <Tooltip title="Open settings">
+                  <IconButton
+                    onClick={handleOpenUserMenu}
+                    sx={{ p: 0, border: "2px solid #fff" }}
+                  >
+                    <Avatar
+                      alt="User Avatar"
+                      src="/static/images/avatar/2.jpg"
+                    />
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: "45px" }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  {settings.map((setting) => (
+                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                      <Typography sx={{ textAlign: "center" }}>
+                        {setting}
+                      </Typography>
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </Box>
+            </>
+          ) : (
+            <>
+              {/* Navbar for Unauthenticated Users */}
+              <Box sx={{ display: "flex", gap: 2 }}>
+                <Button
+                  component={Link}
+                  to="/signin"
+                  sx={{
+                    color: "white",
+                    fontSize: "1rem",
+                    "&:hover": {
+                      backgroundColor: "rgba(255, 255, 255, 0.1)",
+                    },
+                  }}
+                >
+                  Sign In
+                </Button>
+                <Button
+                  component={Link}
+                  to="/signup"
+                  sx={{
+                    color: "white",
+                    fontSize: "1rem",
+                    "&:hover": {
+                      backgroundColor: "rgba(255, 255, 255, 0.1)",
+                    },
+                  }}
+                >
+                  Sign Up
+                </Button>
+              </Box>
+            </>
+          )}
         </Toolbar>
       </Container>
     </AppBar>

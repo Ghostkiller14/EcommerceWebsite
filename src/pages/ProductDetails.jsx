@@ -8,8 +8,8 @@ const ProductDetails = () => {
     useContext(ProductContext);
 
   useEffect(() => {
-    fetchProductsById(id); // Call the function here without invoking it in the dependency array
-  }, [id, fetchProductsById]); // Only pass `id` and `fetchProductsById` as dependencies
+    fetchProductsById(id);
+  }, [id, fetchProductsById]);
 
   if (isLoading) {
     return <h2>Loading...</h2>;
@@ -19,16 +19,18 @@ const ProductDetails = () => {
     return <h2>Error: {error.message}</h2>;
   }
 
-  if (!productById) {
+  if (!productById || !productById.data) {
     return <h2>Product not found</h2>;
   }
 
+  const { name, description, price, quantity } = productById.data;
+
   return (
     <div>
-      <h1>Name: {productById.data.name}</h1>
-      <p>Description: {productById.data.description}</p>
-      <p>Price: {productById.data.price} $</p>
-      <p>Quantity: {productById.data.quantity}</p>
+      <h1>Name: {name || "Product not found"}</h1>
+      <p>Description: {description || "No description available."}</p>
+      <p>Price: {price} $</p>
+      <p>Quantity: {quantity}</p>
       <button>Add to Cart</button>
     </div>
   );
