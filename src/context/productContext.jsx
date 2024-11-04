@@ -1,71 +1,38 @@
 import React, { createContext, useEffect, useState } from "react";
-import {
-  getAllProducts,
-  getPaginatedProduct,
-  getProductById,
-  getProductByName,
-  getSortProductByPrice,
-} from "../services/productsService";
+import { getAllProducts, getProductById } from "../services/productsService";
 
 export const ProductContext = createContext();
 
 export const ProductProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
   const [productById, setProductById] = useState(null);
-  //const [productByName, setProductByName] = useState([]);
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [searchValue, setSearchValue] = useState("");
   const [totalPages, setTotalPages] = useState(1);
-  const [pageSize] = useState(1);
+  const [pageSize] = useState(4);
   const [pageNumber, setPageNumber] = useState(1);
+  const [sortBy, setSortBy] = useState("Price");
+  const [sortOrder, setSortOrder] = useState("asc");
 
-  const fetchProductsData = async () => {
+  const fetchProductsData = async (pageNumber, pageSize, searchValue) => {
     try {
       setIsLoading(true);
-      const res = await getAllProducts();
+      const res = await getAllProducts(
+        pageNumber,
+        pageSize,
+        searchValue,
+        sortBy,
+        sortOrder
+      );
       console.log(res);
-      setProducts(Array.isArray(res) ? res : res.data || []); // Ensure it's an array
+      setProducts(Array.isArray(res) ? res : res.items || []);
+      setTotalPages(res.totalPages);
 
       setIsLoading(false);
     } catch (error) {
       setError(error);
-      setIsLoading(false);
-    }
-  };
-
-  const fetchPaginatedProductData = async (pageNumber, pageSize) => {
-    setIsLoading(true); // Start loading
-    try {
-      const res = await getPaginatedProduct(pageNumber, pageSize);
-      console.log(res); // Log the response
-
-      // Update this part to access the correct property
-      if (res && Array.isArray(res.items) && res.totalPages !== undefined) {
-        setProducts(res.items); // Set products from res.items
-        setTotalPages(res.totalPages); // Set total pages
-      } else {
-        console.error("Unexpected response structure:", res);
-        setError("Failed to load products. Please try again later."); // Provide user feedback
-      }
-    } catch (error) {
-      console.error("Failed to fetch paginated products", error);
-      setError("An error occurred while fetching products."); // Provide user feedback
-    } finally {
-      setIsLoading(false); // Reset loading state
-    }
-  };
-
-  const fetchSortProductData = async () => {
-    setIsLoading(true);
-    try {
-      const res = await getSortProductByPrice();
-      console.log(res); 
-      setProducts(Array.isArray(res) ? res : res.data || []);
-    } catch (error) {
-      console.error("Failed to fetch paginated products", error);
-      setError("An error occurred while fetching products.");
-    } finally {
       setIsLoading(false);
     }
   };
@@ -82,23 +49,11 @@ export const ProductProvider = ({ children }) => {
     }
   };
 
-  const fetchProductByName = async (name) => {
-    //getProductByName
-
-    try {
-      console.log("Here we start fetching");
-      const res = await getProductByName(name);
-      console.log("Here we fetched");
-      console.log(res);
-      setProducts(Array.isArray(res) ? res : res.data || []);
-    } catch {
-      setError(error);
-    }
-  };
-
   useEffect(() => {
-    fetchPaginatedProductData(pageNumber, pageSize);
-  }, [pageNumber, pageSize]);
+    fetchProductsData(pageNumber, pageSize, searchValue, sortBy, sortOrder);
+  }, [pageNumber, pageSize, searchValue, sortBy, sortOrder]);
+
+  console.log(searchValue);
 
   return (
     <ProductContext.Provider
@@ -110,14 +65,15 @@ export const ProductProvider = ({ children }) => {
         totalPages,
         pageSize,
         pageNumber,
+        searchValue,
+        sortBy,
+        setSortBy,
 
-        fetchSortProductData,
+        setSearchValue,
         setPageNumber,
         setTotalPages,
-        fetchProductByName,
         fetchProductsById,
         fetchProductsData,
-        fetchPaginatedProductData,
         setProducts,
         setIsLoading,
         setError,
