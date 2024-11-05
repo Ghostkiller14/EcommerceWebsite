@@ -42,7 +42,7 @@ function NavbarLayout() {
 
   return (
     <AppBar
-      position="static"
+      position="fixed"
       sx={{
         background: "linear-gradient(90deg, #1976d2, #2196f3)",
         padding: "0.5rem 0",

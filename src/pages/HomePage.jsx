@@ -3,7 +3,7 @@ import Products from "../components/products/Products";
 import { ProductContext } from "../context/productContext";
 
 const HomePage = () => {
-  const { products, isLoading, error } = useContext(ProductContext);
+  const { isLoading, error } = useContext(ProductContext);
 
   if (isLoading) {
     return <h2>Products are Loading...</h2>;
@@ -15,8 +15,7 @@ const HomePage = () => {
 
   return (
     <div>
-  
-      <Products products={products} />
+      <Products />
     </div>
   );
 };

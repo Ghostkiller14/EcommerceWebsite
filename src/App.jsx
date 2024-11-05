@@ -1,10 +1,12 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { CategoryProvider } from "./context/categoryContext";
 import { ProductProvider } from "./context/productContext";
 import Layout from "./layout/Layout";
+import AdminDashboard from "./pages/AdminDashboard";
 import HomePage from "./pages/HomePage";
 import ProductDetails from "./pages/ProductDetails";
-import SignUp from "./pages/signUp";
 import SignIn from "./pages/SignIn";
+import SignUp from "./pages/signUp";
 
 function App() {
   const router = createBrowserRouter([
@@ -28,13 +30,19 @@ function App() {
           path: "/signin",
           element: <SignIn />,
         },
+        {
+          path: "admin/dashboard",
+          element: <AdminDashboard />,
+        },
       ],
     },
   ]);
 
   return (
     <ProductProvider>
-      <RouterProvider router={router} />;
+      <CategoryProvider>
+        <RouterProvider router={router} />;
+      </CategoryProvider>
     </ProductProvider>
   );
 }

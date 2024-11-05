@@ -8,10 +8,13 @@ import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import { jwtDecode } from "jwt-decode";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { signIn } from "../services/signUpService";
 
 const SignIn = () => {
+  const navigate = useNavigate();
   const [SignInData, setSignInData] = useState({
     email: "",
     password: "",
@@ -28,8 +31,16 @@ const SignIn = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const s = await signIn(SignInData);
-    console.log("sign in : " + s);
+    const token = await signIn(SignInData);
+    const decoded = jwtDecode(token);
+
+    console.log(decoded)
+
+    if (decoded.role === "Admin") {
+      navigate("/admin/dashboard");
+    } else {
+      navigate("/HomePage");
+    }
   };
 
   return (
