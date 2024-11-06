@@ -30,11 +30,11 @@ function App() {
           path: "/signin",
           element: <SignIn />,
         },
-        {
-          path: "admin/dashboard",
-          element: <AdminDashboard />,
-        },
       ],
+    },
+    {
+      path: "admin/dashboard",
+      element: <AdminDashboard />,
     },
   ]);
 

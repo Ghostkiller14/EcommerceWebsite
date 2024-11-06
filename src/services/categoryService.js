@@ -8,3 +8,21 @@ export const getCategories = async () => {
   console.log(res.data.data);
   return res.data.data;
 };
+
+export const deleteCategoryById = async (id) => {
+  const res = await axios.delete(`${BaseURL}/${id}`);
+
+  return res;
+};
+
+export const addCategory = async (formData) => {
+  const res = await axios.post(BaseURL, formData);
+  console.log(res.data.data);
+  return res.data.data;
+};
+
+export const updateCategory = async (id, formData) => {
+  const res = await axios.put(`${BaseURL}/${id}`, formData);
+  console.log(res.data.data);
+  return res.data.data;
+};

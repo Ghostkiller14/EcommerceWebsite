@@ -1,12 +1,19 @@
 import { createContext, useEffect, useState } from "react";
-import { getCategories } from "../services/categoryService";
+import {
+  addCategory,
+  deleteCategoryById,
+  getCategories,
+  updateCategory,
+} from "../services/categoryService";
 
 export const CategoryContext = createContext();
 
 export const CategoryProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [category, setCategory] = useState([]);
+  const [categories, setCategory] = useState([]);
+  // const [updateCategoryName, setUpdateCategoryName] = useState({});
+  //const [categoryId, setCategoryById] = useState([]);
 
   const fetchCategryData = async () => {
     try {
@@ -23,13 +30,63 @@ export const CategoryProvider = ({ children }) => {
     }
   };
 
+  const deleteCategory = async (id) => {
+    try {
+      const res = await deleteCategoryById(id);
+
+      console.log(res);
+
+      setCategory((prevCategories) =>
+        prevCategories.filter((category) => category.categoryId !== id)
+      );
+    } catch {
+      setError(error);
+    }
+  };
+
+  const addCategoryByName = async (formData) => {
+    try {
+      const res = await addCategory(formData);
+
+      setCategory((prevCategories) => [...prevCategories, res]);
+
+      console.log(res);
+    } catch {
+      setError(error);
+    }
+  };
+
+  const updateCategoryName = async (id, formData) => {
+    try {
+      const res = await updateCategory(id, formData);
+
+      setCategory((prevCategories) =>
+        prevCategories.map((category) =>
+          category.categoryId === id ? { ...category, ...res } : category
+        )
+      );
+    } catch {
+      setError(error);
+    }
+  };
+
   useEffect(() => {
     fetchCategryData();
   }, []);
 
   return (
     <CategoryContext.Provider
-      value={{ isLoading, error, category, setCategory }}
+      value={{
+        isLoading,
+        error,
+        categories,
+        updateCategoryName,
+
+        updateCategory,
+        setCategory,
+        deleteCategory,
+        addCategoryByName,
+      }}
     >
       {children}
     </CategoryContext.Provider>
