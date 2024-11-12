@@ -18,7 +18,7 @@ const AdminCategory = ({ category, onEditCategory }) => {
     console.log(deletes);
   };
 
-  const handleUpdateCategory = async () => {
+  const handleUpdateCategory = async (category) => {
     onEditCategory(category);
   };
 
@@ -53,7 +53,7 @@ const AdminCategory = ({ category, onEditCategory }) => {
           <Button
             variant="contained"
             size="small"
-            onClick={() => handleUpdateCategory(categoryId)}
+            onClick={() => handleUpdateCategory(category)}
           >
             Update
           </Button>{" "}

@@ -1,4 +1,4 @@
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, Box } from "@mui/material";
 import React, { useContext, useState } from "react";
 import { ProductContext } from "../context/productContext";
 
@@ -15,22 +15,23 @@ const Search = () => {
   };
 
   return (
-    <>
+    <Box sx={{ display: "flex", gap: 1 }}>
       <TextField
-        sx={{ marginBottom: "1.5rem" }}
         id="outlined-basic"
         label="Search Products"
         variant="outlined"
         value={searchTerm}
         onChange={handleChange}
+        fullWidth
       />
       <Button
         variant="contained"
         onClick={handleSearch}
+        sx={{ padding: "0.7rem 1.5rem", height: "fit-content" }}
       >
         Search
       </Button>
-    </>
+    </Box>
   );
 };
 

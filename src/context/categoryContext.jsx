@@ -81,7 +81,6 @@ export const CategoryProvider = ({ children }) => {
         error,
         categories,
         updateCategoryName,
-
         updateCategory,
         setCategory,
         deleteCategory,

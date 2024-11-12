@@ -1,5 +1,10 @@
 import React, { createContext, useEffect, useState } from "react";
-import { getAllProducts, getProductById } from "../services/productsService";
+import {
+  addProduct,
+  deleteProductById,
+  getAllProducts,
+  updateProduct,
+} from "../services/productsService";
 
 export const ProductContext = createContext();
 
@@ -17,8 +22,8 @@ export const ProductProvider = ({ children }) => {
   const [sortOrder, setSortOrder] = useState("asc");
 
   const fetchProductsData = async (pageNumber, pageSize, searchValue) => {
+    setIsLoading(true);
     try {
-      setIsLoading(true);
       const res = await getAllProducts(
         pageNumber,
         pageSize,
@@ -37,18 +42,43 @@ export const ProductProvider = ({ children }) => {
     }
   };
 
-  const fetchProductsById = async (id) => {
+  const deleteProducts = async (id) => {
     try {
-      //console.log("Here we start fetching");
-      const res = await getProductById(id);
-      // console.log("Here we fetched");
+      const res = await deleteProductById(id);
+
       console.log(res);
-      setProductById(res);
+
+      setProducts((prevProduct) =>
+        prevProduct.filter((product) => product.productId !== id)
+      );
     } catch {
       setError(error);
     }
   };
 
+  const createProduct = async (fromData) => {
+    try {
+      const res = await addProduct(fromData);
+      setProducts((prevProduct) => [...prevProduct, res]);
+      console.log(res);
+    } catch {
+      setError(error);
+    }
+  };
+
+  const editProduct = async (id, formData) => {
+    try {
+      const res = await updateProduct(id, formData);
+      setProducts((prevProduct) =>
+        prevProduct.map((product) =>
+          product.productId === id ? { ...product, ...res } : product
+        )
+      );
+      console.log(res);
+    } catch {
+      setError(error);
+    }
+  };
   useEffect(() => {
     fetchProductsData(pageNumber, pageSize, searchValue, sortBy, sortOrder);
   }, [pageNumber, pageSize, searchValue, sortBy, sortOrder]);
@@ -67,12 +97,13 @@ export const ProductProvider = ({ children }) => {
         pageNumber,
         searchValue,
         sortBy,
+        editProduct,
+        createProduct,
         setSortBy,
-
+        deleteProducts,
         setSearchValue,
         setPageNumber,
         setTotalPages,
-        fetchProductsById,
         fetchProductsData,
         setProducts,
         setIsLoading,

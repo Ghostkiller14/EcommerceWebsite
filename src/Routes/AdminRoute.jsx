@@ -2,14 +2,15 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import SignIn from "../pages/SignIn";
 
-const ProtectedRoute = () => {
+const AdminRoute = () => {
   const logInfo = JSON.parse(localStorage.getItem("user"));
 
   return (
     <>
+    
       {logInfo !== null &&
       logInfo.isLoggedIn &&
-      logInfo.decodedUser === "User" ? (
+      logInfo.decodedUser.role === "Admin" ? (
         <Outlet />
       ) : (
         <SignIn />
@@ -19,4 +20,4 @@ const ProtectedRoute = () => {
   );
 };
 
-export default ProtectedRoute;
+export default AdminRoute;

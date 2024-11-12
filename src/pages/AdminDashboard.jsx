@@ -1,4 +1,4 @@
-import { Add, Category, People, Store } from "@mui/icons-material";
+import { Category, ExitToApp, People, Store } from "@mui/icons-material";
 import {
   AppBar,
   Box,
@@ -9,23 +9,21 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  TextField,
   Toolbar,
   Typography,
 } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import React, { useContext, useState } from "react";
-import AdminCategories from "../components/admin/adminCategories/AdminCategories";
-import { CategoryContext } from "../context/categoryContext";
+import React from "react";
+import { Link, Outlet } from "react-router-dom";
 
 // Sidebar items
 const sidebarItems = [
-  { text: "Users", icon: <People />, route: "/users" },
-  { text: "Products", icon: <Store />, route: "/products" },
-  { text: "Categories", icon: <Category />, route: "/categories" },
+  { text: "Users", icon: <People />, route: "users" },
+  { text: "Products", icon: <Store />, route: "products" },
+  { text: "Categories", icon: <Category />, route: "categories" },
 ];
 
-// Create a custom theme for the overall application
+// Custom theme
 const theme = createTheme({
   palette: {
     mode: "light",
@@ -39,7 +37,16 @@ const theme = createTheme({
 });
 
 export default function AdminDashboard() {
-  const [selectedSection, setSelectedSection] = React.useState("Users");
+  // Handle sign out
+  const handleSignOut = () => {
+    localStorage.removeItem("user");
+
+    localStorage.removeItem("token");
+
+    setTimeout(() => {
+      window.location.href = "/signin";
+    }, 1500);
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -58,7 +65,6 @@ export default function AdminDashboard() {
           </Toolbar>
         </AppBar>
 
-        {/* Sidebar Navigation */}
         <Drawer
           variant="permanent"
           sx={{
@@ -67,8 +73,11 @@ export default function AdminDashboard() {
             [`& .MuiDrawer-paper`]: {
               width: 240,
               boxSizing: "border-box",
-              backgroundColor: "#424242", // Darker background for the sidebar
-              color: "#ffffff", // White text color
+              backgroundColor: "#424242",
+              color: "#ffffff",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
             },
           }}
         >
@@ -79,7 +88,8 @@ export default function AdminDashboard() {
                 <ListItem
                   button
                   key={item.text}
-                  onClick={() => setSelectedSection(item.text)}
+                  component={Link}
+                  to={item.route}
                 >
                   <ListItemIcon sx={{ color: "#ffffff" }}>
                     {item.icon}
@@ -89,110 +99,32 @@ export default function AdminDashboard() {
               ))}
             </List>
           </Box>
+
+          {/* Sign Out Button */}
+          <Box sx={{ padding: 2 }}>
+            <Button
+              startIcon={<ExitToApp />}
+              fullWidth
+              variant="contained"
+              color="secondary"
+              onClick={handleSignOut}
+              sx={{
+                textTransform: "none",
+                color: "#ffffff",
+                backgroundColor: "#d32f2f",
+              }}
+            >
+              Sign Out
+            </Button>
+          </Box>
         </Drawer>
 
         {/* Main Content Area */}
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
           <Toolbar />
-          <Typography variant="h4" gutterBottom>
-            {selectedSection} Management
-          </Typography>
-
-          {/* Render the CRUD Table */}
-          <Box>
-            {selectedSection === "Users" && <UserManagement />}
-            {selectedSection === "Products" && <ProductManagement />}
-            {selectedSection === "Categories" && <CategoryManagement />}
-          </Box>
+          <Outlet /> {/* Renders nested routes here */}
         </Box>
       </Box>
     </ThemeProvider>
-  );
-}
-
-// User Management Component
-function UserManagement() {
-  return (
-    <Box>
-      <Typography variant="h6">User List</Typography>
-      <Button variant="contained" startIcon={<Add />} sx={{ mb: 2 }}>
-        Add User
-      </Button>
-      {/* Table or Grid with Users */}
-      {/* Each row will have Edit and Delete buttons */}
-    </Box>
-  );
-}
-
-// Product Management Component
-function ProductManagement() {
-  return (
-    <Box>
-      <Typography variant="h6">Product List</Typography>
-      <Button variant="contained" startIcon={<Add />} sx={{ mb: 2 }}>
-        Add Product
-      </Button>
-      {/* Table or Grid with Products */}
-      {/* Each row will have Edit and Delete buttons */}
-    </Box>
-  );
-}
-
-// Category Management Component
-function CategoryManagement() {
-  const { addCategoryByName, updateCategoryName, updateCategory } =
-    useContext(CategoryContext);
-  const [formData, setFormData] = useState({
-    categoryId: null,
-    name: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    if (formData.categoryId) {
-      const res = await updateCategoryName(formData.categoryId, formData);
-      console.log(res);
-    } else {
-      const postCategory = await addCategoryByName(formData);
-      console.log("Category Name :", postCategory);
-    }
-
-    setFormData({ categoryId: null, name: "" });
-  };
-
-  const setUpdateCategory = async (category) => {
-    setFormData({
-      categoryId: category.categoryId,
-      name: category.name,
-    });
-  };
-
-  return (
-    <>
-      <Box component="form" onSubmit={handleSubmit}>
-        <Typography variant="h6">Category List</Typography>
-
-        <TextField onChange={handleChange} name="name" value={formData.name} />
-
-        <Button
-          type="submit"
-          variant="contained"
-          startIcon={<Add />}
-          sx={{ mb: 2 }}
-        >
-          {formData.categoryId ? "Update Category" : "Add Category"}
-        </Button>
-      </Box>
-      <AdminCategories onEditCategory={setUpdateCategory} />
-    </>
   );
 }

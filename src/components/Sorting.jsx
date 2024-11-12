@@ -12,20 +12,18 @@ const Sorting = () => {
     setSortBy(event.target.value);
   };
 
-  const option1 = "Name";
-  const option2 = "Price";
-
   return (
-    <FormControl fullWidth>
-      <InputLabel id="demo-simple-select-label">Age</InputLabel>
+    <FormControl fullWidth variant="outlined">
+      <InputLabel id="sorting-label">Sort By</InputLabel>
       <Select
-        labelId="demo-simple-select-label"
-        id="demo-simple-select"
+        labelId="sorting-label"
+        id="sort-by-select"
+        label="Sort By"
         onChange={handleChange}
         value={selectedValue}
       >
-        <MenuItem value={option1}>Name</MenuItem>
-        <MenuItem value={option2}>Price</MenuItem>
+        <MenuItem value="Name">Name</MenuItem>
+        <MenuItem value="Price">Price</MenuItem>
       </Select>
     </FormControl>
   );

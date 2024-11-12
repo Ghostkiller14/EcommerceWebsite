@@ -1,20 +1,23 @@
-import React, { useContext } from "react";
+import { Box, Grid } from "@mui/material";
+import React from "react";
 import Products from "../components/products/Products";
-import { ProductContext } from "../context/productContext";
+import Search from "../components/Search";
+import Sorting from "../components/Sorting";
 
 const HomePage = () => {
-  const { isLoading, error } = useContext(ProductContext);
-
-  if (isLoading) {
-    return <h2>Products are Loading...</h2>;
-  }
-
-  if (error) {
-    return <h2>{error.message}</h2>;
-  }
-
   return (
-    <div>
+    <div style={{ marginTop: "128px", padding: "1rem" }}>
+      <Box sx={{ marginBottom: "1.5rem" }}>
+        {/* Flex container for Search and Sorting */}
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={12} md={8}>
+            <Search />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Sorting />
+          </Grid>
+        </Grid>
+      </Box>
       <Products />
     </div>
   );

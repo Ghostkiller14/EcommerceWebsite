@@ -1,13 +1,16 @@
 import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { register } from "../services/signUpService";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     userName: "",
     email: "",
     password: "",
-
   });
 
   const handleChange = (e) => {
@@ -21,20 +24,39 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const postdata = await register(formData);
+    try {
+      const postdata = await register(formData);
+      console.log("Sign Up Data:", postdata);
 
-    console.log("Sign Up Data:", postdata);
+      // Show success toast if registration is successful
+      navigate("/signIn");
+      toast.success("Registration successful!", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+    } catch (error) {
+      console.error("Registration error:", error);
+
+      // Show error toast if there's an error
+      toast.error("Registration failed. Please try again.", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+    }
   };
 
   return (
     <Container component="main" maxWidth="xs">
+      {/* Toast container to display notifications */}
+      <ToastContainer />
+
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          marginTop: 8,
+          marginTop: 17,
           padding: 3,
           borderRadius: 2,
           boxShadow: 3,
@@ -50,8 +72,8 @@ const SignUp = () => {
             required
             fullWidth
             label="UserName"
-            name="UserName"
-            value={formData.name}
+            name="userName"
+            value={formData.userName}
             onChange={handleChange}
           />
           <TextField
@@ -85,7 +107,7 @@ const SignUp = () => {
             Sign Up
           </Button>
           <Typography variant="body2" align="center">
-            Already have an account? <a href="/signin">sign in</a>
+            Already have an account? <a href="/signin">Sign in</a>
           </Typography>
         </Box>
       </Box>

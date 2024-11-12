@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { useContext } from "react";
 
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
@@ -7,17 +7,15 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
-import { ProductContext } from "../../context/productContext";
+import { CartContext } from "../../context/cartContext";
 
 const Product = ({ product }) => {
   const { productId, name, price, quantity, description } = product;
 
-  const { products, setProducts } = createContext(ProductContext);
-  const [showDetails, setShowDetails] = useState(false);
-
+  const { addToCart } = useContext(CartContext);
   const navigate = useNavigate();
 
-  const showPageDetails = (productId) => {
+  const showPageDetails = async (productId) => {
     navigate(`/HomePage/${productId}`);
   };
 
@@ -56,7 +54,11 @@ const Product = ({ product }) => {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button variant="contained" size="small">
+          <Button
+            variant="contained"
+            size="small"
+            onClick={() => addToCart(product)}
+          >
             Add To Cart
           </Button>
           <Button size="small" onClick={() => showPageDetails(productId)}>

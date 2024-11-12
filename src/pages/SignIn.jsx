@@ -8,13 +8,15 @@ import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { jwtDecode } from "jwt-decode";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // Import toastify CSS for styling
 import { signIn } from "../services/signUpService";
+import { UserContext } from "../services/userContext";
 
 const SignIn = () => {
-  const navigate = useNavigate();
+  const { userLoggedIn, setUserLoggedIn } = useContext(UserContext);
+
   const [SignInData, setSignInData] = useState({
     email: "",
     password: "",
@@ -31,15 +33,30 @@ const SignIn = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const token = await signIn(SignInData);
-    const decoded = jwtDecode(token);
+    try {
+      const token = await signIn(SignInData);
 
-    console.log(decoded)
+      if (token.role === "Admin") {
+        toast.success("Welcome back, Admin! Redirecting to dashboard...");
+        setTimeout(() => {
+          window.location.href = "dashboard/admin";
+        }, 1500);
+      } else {
+        toast.success("Login successful! Redirecting to homepage...");
+        setTimeout(() => {
+          window.location.href = "/HomePage";
+        }, 1500);
+      }
 
-    if (decoded.role === "Admin") {
-      navigate("/admin/dashboard");
-    } else {
-      navigate("/HomePage");
+      setSignInData({
+        email: "",
+        password: "",
+      });
+
+      console.log("data ", token);
+    } catch (error) {
+      toast.error("Login failed. Please check your credentials.");
+      console.error("Login error: ", error);
     }
   };
 
@@ -48,7 +65,7 @@ const SignIn = () => {
       <CssBaseline />
       <Box
         sx={{
-          marginTop: 8,
+          marginTop: 17,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -93,6 +110,8 @@ const SignIn = () => {
           >
             Sign In
           </Button>
+          <ToastContainer position="top-center" />{" "}
+          {/* Add ToastContainer here */}
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">
