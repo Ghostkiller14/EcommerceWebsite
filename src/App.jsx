@@ -86,7 +86,6 @@ function App() {
   ]);
 
   return (
-    <UserProvider>
       <OrderProvider>
         <UserProvider>
           <CartProvider>
@@ -99,7 +98,6 @@ function App() {
           </CartProvider>
         </UserProvider>
       </OrderProvider>
-    </UserProvider>
   );
 }
 
