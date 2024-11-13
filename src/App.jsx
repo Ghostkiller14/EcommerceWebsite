@@ -8,7 +8,7 @@ import ProductManagment from "./components/admin/ProductManagment";
 import UserManagment from "./components/admin/UserManagment";
 
 import Cart from "./components/cart/Cart";
-import { CartProvider } from "./context/CartContext";
+import { CartProvider } from "./context/CartContext.jsx";
 import { CategoryProvider } from "./context/CategoryContext";
 import { OrderProvider } from "./context/OrderContext";
 import { ProductProvider } from "./context/ProductContext";
@@ -86,18 +86,18 @@ function App() {
   ]);
 
   return (
-      <OrderProvider>
-        <UserProvider>
-          <CartProvider>
-            <ProductProvider>
-              <CategoryProvider>
-                <RouterProvider router={router} />
-                <ToastContainer position="top-center" />
-              </CategoryProvider>
-            </ProductProvider>
-          </CartProvider>
-        </UserProvider>
-      </OrderProvider>
+    <OrderProvider>
+      <UserProvider>
+        <CartProvider>
+          <ProductProvider>
+            <CategoryProvider>
+              <RouterProvider router={router} />
+              <ToastContainer position="top-center" />
+            </CategoryProvider>
+          </ProductProvider>
+        </CartProvider>
+      </UserProvider>
+    </OrderProvider>
   );
 }
 
