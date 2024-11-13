@@ -1,10 +1,8 @@
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
-
+const BaseURL =
+  "https://sda-3-onsite-backend-teamwork-z6h7.onrender.com/api/v1/auth";
 export const register = async (formData) => {
-  const BaseURL =
-    "https://sda-3-onsite-backend-teamwork-z6h7.onrender.com/api/v1/auth";
-
   try {
     const res = await axios.post(`${BaseURL}/register`, formData, {
       headers: {

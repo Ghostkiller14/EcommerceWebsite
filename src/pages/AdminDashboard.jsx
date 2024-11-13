@@ -40,7 +40,6 @@ const theme = createTheme({
 export default function AdminDashboard() {
   const handleSignOut = () => {
     localStorage.removeItem("user");
-
     localStorage.removeItem("token");
 
     setTimeout(() => {
@@ -53,7 +52,6 @@ export default function AdminDashboard() {
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
 
-        {/* App Bar */}
         <AppBar
           position="fixed"
           sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
@@ -82,7 +80,7 @@ export default function AdminDashboard() {
           }}
         >
           <Toolbar />
-          <Box sx={{ overflow: "auto" }}>
+          <Box sx={{ overflow: "auto", flexGrow: 1 }}>
             <List>
               {sidebarItems.map((item) => (
                 <ListItem
@@ -94,7 +92,7 @@ export default function AdminDashboard() {
                   <ListItemIcon sx={{ color: "#ffffff" }}>
                     {item.icon}
                   </ListItemIcon>
-                  <ListItemText primary={item.text} />
+                  <ListItemText primary={item.text} sx={{ color: "#ffffff" }} />
                 </ListItem>
               ))}
             </List>
