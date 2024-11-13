@@ -1,6 +1,6 @@
-import { Button, TextField, Box } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import React, { useContext, useState } from "react";
-import { ProductContext } from "../context/productContext";
+import { ProductContext } from "../context/ProductContext";
 
 const Search = () => {
   const { setSearchValue } = useContext(ProductContext);

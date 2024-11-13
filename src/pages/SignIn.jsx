@@ -8,15 +8,12 @@ import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Import toastify CSS for styling
-import { signIn } from "../services/signUpService";
-import { UserContext } from "../services/userContext";
+import { signIn } from "../services/AuthService";
 
 const SignIn = () => {
-  const { userLoggedIn, setUserLoggedIn } = useContext(UserContext);
-
   const [SignInData, setSignInData] = useState({
     email: "",
     password: "",
@@ -52,8 +49,6 @@ const SignIn = () => {
         email: "",
         password: "",
       });
-
-      console.log("data ", token);
     } catch (error) {
       toast.error("Login failed. Please check your credentials.");
       console.error("Login error: ", error);
@@ -65,7 +60,9 @@ const SignIn = () => {
       <CssBaseline />
       <Box
         sx={{
-          marginTop: 17,
+          marginTop: 13,
+          marginBottom: 12,
+
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -111,7 +108,6 @@ const SignIn = () => {
             Sign In
           </Button>
           <ToastContainer position="top-center" />{" "}
-          {/* Add ToastContainer here */}
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">

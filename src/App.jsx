@@ -3,20 +3,23 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import CategoryManagment from "./components/admin/CategoryManagment";
+import OrderManagment from "./components/admin/OrderManagment";
 import ProductManagment from "./components/admin/ProductManagment";
 import UserManagment from "./components/admin/UserManagment";
 import Cart from "./components/cart/Cart";
-import { CartProvider } from "./context/cartContext";
-import { CategoryProvider } from "./context/categoryContext";
-import { ProductProvider } from "./context/productContext";
+import { CartProvider } from "./context/CartContext";
+import { CategoryProvider } from "./context/CategoryContext";
+import { OrderProvider } from "./context/OrderContext";
+import { ProductProvider } from "./context/ProductContext";
+import { UserProvider } from "./context/UserContext";
 import Layout from "./layout/Layout";
 import AdminDashboard from "./pages/AdminDashboard";
 import HomePage from "./pages/HomePage";
 import ProductDetails from "./pages/ProductDetails";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/signUp";
+import UserDashboard from "./pages/UserDashboard";
 import AdminRoute from "./Routes/AdminRoute";
-import { UserProvider } from "./services/userContext";
 
 function App() {
   const router = createBrowserRouter([
@@ -44,6 +47,11 @@ function App() {
           path: "/cart",
           element: <Cart />,
         },
+
+        {
+          path: "/UserDashboard",
+          element: <UserDashboard />,
+        },
       ],
     },
     {
@@ -66,6 +74,10 @@ function App() {
               path: "categories",
               element: <CategoryManagment />,
             },
+            {
+              path: "orders",
+              element: <OrderManagment />,
+            },
           ],
         },
       ],
@@ -74,14 +86,18 @@ function App() {
 
   return (
     <UserProvider>
-      <CartProvider>
-        <ProductProvider>
-          <CategoryProvider>
-            <RouterProvider router={router} />;
-            <ToastContainer position="top-center" />
-          </CategoryProvider>
-        </ProductProvider>
-      </CartProvider>
+      <OrderProvider>
+        <UserProvider>
+          <CartProvider>
+            <ProductProvider>
+              <CategoryProvider>
+                <RouterProvider router={router} />
+                <ToastContainer position="top-center" />
+              </CategoryProvider>
+            </ProductProvider>
+          </CartProvider>
+        </UserProvider>
+      </OrderProvider>
     </UserProvider>
   );
 }

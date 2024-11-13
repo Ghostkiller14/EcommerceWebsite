@@ -7,7 +7,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
-import { CartContext } from "../../context/cartContext";
+import { CartContext } from "../../context/CartContext";
 
 const Product = ({ product }) => {
   const { productId, name, price, quantity, description } = product;

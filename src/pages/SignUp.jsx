@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { register } from "../services/signUpService";
+import { register } from "../services/AuthService";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -28,8 +28,7 @@ const SignUp = () => {
       const postdata = await register(formData);
       console.log("Sign Up Data:", postdata);
 
-      // Show success toast if registration is successful
-      navigate("/signIn");
+      navigate("/signin");
       toast.success("Registration successful!", {
         position: "top-right",
         autoClose: 3000,
@@ -37,7 +36,6 @@ const SignUp = () => {
     } catch (error) {
       console.error("Registration error:", error);
 
-      // Show error toast if there's an error
       toast.error("Registration failed. Please try again.", {
         position: "top-right",
         autoClose: 3000,
@@ -47,7 +45,6 @@ const SignUp = () => {
 
   return (
     <Container component="main" maxWidth="xs">
-      {/* Toast container to display notifications */}
       <ToastContainer />
 
       <Box

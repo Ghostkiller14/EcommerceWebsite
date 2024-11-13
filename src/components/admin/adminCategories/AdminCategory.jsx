@@ -6,7 +6,8 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useContext } from "react";
-import { CategoryContext } from "../../../context/categoryContext";
+
+import { CategoryContext } from "../../../context/CategoryContext";
 
 const AdminCategory = ({ category, onEditCategory }) => {
   const { categoryId, name } = category;
@@ -14,12 +15,11 @@ const AdminCategory = ({ category, onEditCategory }) => {
   const { deleteCategory } = useContext(CategoryContext);
 
   const handleDeleteCategory = async (categoryId) => {
-    const deletes = await deleteCategory(categoryId);
-    console.log(deletes);
+    await deleteCategory(categoryId);
   };
 
   const handleUpdateCategory = async (category) => {
-    onEditCategory(category);
+    await onEditCategory(category);
   };
 
   return (

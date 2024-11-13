@@ -13,6 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
 
@@ -21,9 +22,9 @@ const sidebarItems = [
   { text: "Users", icon: <People />, route: "users" },
   { text: "Products", icon: <Store />, route: "products" },
   { text: "Categories", icon: <Category />, route: "categories" },
+  { text: "Orders", icon: <Category />, route: "orders" },
 ];
 
-// Custom theme
 const theme = createTheme({
   palette: {
     mode: "light",
@@ -37,7 +38,6 @@ const theme = createTheme({
 });
 
 export default function AdminDashboard() {
-  // Handle sign out
   const handleSignOut = () => {
     localStorage.removeItem("user");
 
@@ -100,7 +100,6 @@ export default function AdminDashboard() {
             </List>
           </Box>
 
-          {/* Sign Out Button */}
           <Box sx={{ padding: 2 }}>
             <Button
               startIcon={<ExitToApp />}
@@ -119,10 +118,9 @@ export default function AdminDashboard() {
           </Box>
         </Drawer>
 
-        {/* Main Content Area */}
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
           <Toolbar />
-          <Outlet /> {/* Renders nested routes here */}
+          <Outlet />
         </Box>
       </Box>
     </ThemeProvider>

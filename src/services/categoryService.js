@@ -5,7 +5,6 @@ const BaseURL =
 
 export const getCategories = async () => {
   const res = await axios.get(BaseURL);
-  console.log(res.data.data);
   return res.data.data;
 };
 
@@ -17,12 +16,10 @@ export const deleteCategoryById = async (id) => {
 
 export const addCategory = async (formData) => {
   const res = await axios.post(BaseURL, formData);
-  console.log(res.data.data);
   return res.data.data;
 };
 
 export const updateCategory = async (id, formData) => {
   const res = await axios.put(`${BaseURL}/${id}`, formData);
-  console.log(res.data.data);
   return res.data.data;
 };

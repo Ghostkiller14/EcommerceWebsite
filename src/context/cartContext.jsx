@@ -11,7 +11,6 @@ export const CartProvider = ({ children }) => {
 
   const [cart, setCart] = useState(loadCartFromLocalStorage);
 
-  const [cartQuantity, setCartQuantity] = useState(loadCartFromLocalStorage);
 
   const saveCartToLocalStorage = (cartItem) => {
     localStorage.setItem("cart", JSON.stringify(cartItem));

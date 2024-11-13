@@ -4,7 +4,7 @@ import {
   deleteProductById,
   getAllProducts,
   updateProduct,
-} from "../services/productsService";
+} from "../services/ProductsService";
 
 export const ProductContext = createContext();
 
@@ -31,7 +31,6 @@ export const ProductProvider = ({ children }) => {
         sortBy,
         sortOrder
       );
-      console.log(res);
       setProducts(Array.isArray(res) ? res : res.items || []);
       setTotalPages(res.totalPages);
 
@@ -44,9 +43,7 @@ export const ProductProvider = ({ children }) => {
 
   const deleteProducts = async (id) => {
     try {
-      const res = await deleteProductById(id);
-
-      console.log(res);
+      await deleteProductById(id);
 
       setProducts((prevProduct) =>
         prevProduct.filter((product) => product.productId !== id)
@@ -60,7 +57,6 @@ export const ProductProvider = ({ children }) => {
     try {
       const res = await addProduct(fromData);
       setProducts((prevProduct) => [...prevProduct, res]);
-      console.log(res);
     } catch {
       setError(error);
     }

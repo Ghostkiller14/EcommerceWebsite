@@ -1,6 +1,7 @@
 import { Box, Grid } from "@mui/material";
 import React, { useContext } from "react";
-import { CategoryContext } from "../../../context/categoryContext";
+
+import { CategoryContext } from "../../../context/CategoryContext";
 import AdminCategory from "./AdminCategory";
 
 const AdminCategories = ({ onEditCategory }) => {

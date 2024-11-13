@@ -1,18 +1,22 @@
+import { Box } from "@mui/material";
 import React from "react";
 import { Outlet } from "react-router-dom";
+import Footer from "./Footer";
 import NavbarLayout from "./NavbarLayout";
 
 const Layout = () => {
   return (
-    <div>
+    <Box display="flex" flexDirection="column" minHeight="100vh">
       <header>
         <NavbarLayout />
       </header>
 
-      <main>
+      <Box component="main" flexGrow={1}>
         <Outlet />
-      </main>
-    </div>
+      </Box>
+
+      <Footer />
+    </Box>
   );
 };
 

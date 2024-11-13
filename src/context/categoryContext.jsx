@@ -4,7 +4,7 @@ import {
   deleteCategoryById,
   getCategories,
   updateCategory,
-} from "../services/categoryService";
+} from "../services/CategoryService";
 
 export const CategoryContext = createContext();
 
@@ -12,8 +12,7 @@ export const CategoryProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [categories, setCategory] = useState([]);
-  // const [updateCategoryName, setUpdateCategoryName] = useState({});
-  //const [categoryId, setCategoryById] = useState([]);
+
 
   const fetchCategryData = async () => {
     try {

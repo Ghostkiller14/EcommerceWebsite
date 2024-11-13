@@ -1,8 +1,8 @@
-import React, { useContext, useState } from 'react'
-import AdminCategories from './adminCategories/AdminCategories';
-import { Add } from '@mui/icons-material';
-import { Box, Button, TextField, Typography } from '@mui/material';
-import { CategoryContext } from '../../context/categoryContext';
+import { Add } from "@mui/icons-material";
+import { Box, Button, TextField, Typography } from "@mui/material";
+import React, { useContext, useState } from "react";
+import { CategoryContext } from "../../context/CategoryContext";
+import AdminCategories from "./adminCategories/AdminCategories";
 
 const CategoryManagment = () => {
   const { addCategoryByName, updateCategoryName } = useContext(CategoryContext);
@@ -23,11 +23,9 @@ const CategoryManagment = () => {
     event.preventDefault();
 
     if (formData.categoryId) {
-      const res = await updateCategoryName(formData.categoryId, formData);
-      console.log(res);
+      await updateCategoryName(formData.categoryId, formData);
     } else {
-      const postCategory = await addCategoryByName(formData);
-      console.log("Category Name :", postCategory);
+      await addCategoryByName(formData);
     }
 
     setFormData({ categoryId: null, name: "" });
@@ -58,7 +56,7 @@ const CategoryManagment = () => {
       </Box>
       <AdminCategories onEditCategory={setUpdateCategory} />
     </>
-  )
-}
+  );
+};
 
-export default CategoryManagment
+export default CategoryManagment;

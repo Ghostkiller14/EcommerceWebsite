@@ -1,62 +1,93 @@
 import AdbIcon from "@mui/icons-material/Adb";
-import MenuIcon from "@mui/icons-material/Menu"; // Import the MenuIcon for mobile view
+import MenuIcon from "@mui/icons-material/Menu";
 import AppBar from "@mui/material/AppBar";
-import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
-import Drawer from "@mui/material/Drawer"; // Import Drawer for mobile menu
-import IconButton from "@mui/material/IconButton";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
+import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
 import Toolbar from "@mui/material/Toolbar";
-import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const pages = [
   { name: "Pricing", path: "/pricing" },
   { name: "Blog", path: "/blog" },
-  { name: "Cart", path: "/cart" },
 ];
 
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
-
 function NavbarLayout() {
-  const [anchorElUser, setAnchorElUser] = useState(null);
-  const [mobileOpen, setMobileOpen] = useState(false); // State for Drawer
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [userRole, setUserRole] = useState(null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem("user"));
     if (storedData && storedData.isLoggedIn) {
       setIsAuthenticated(true);
-      setUserRole(storedData.Status);
     }
   }, []);
 
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
-
   const handleSignOut = () => {
     localStorage.removeItem("user");
-
     localStorage.removeItem("token");
     setIsAuthenticated(false);
-    setUserRole(null);
-    handleCloseUserMenu();
+    navigate("/signin");
   };
 
-  const toggleMobileMenu = () => {
-    setMobileOpen(!mobileOpen);
+  const toggleDrawer = (open) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+    setDrawerOpen(open);
   };
+
+  const list = () => (
+    <Box
+      sx={{ width: 250 }}
+      role="presentation"
+      onClick={toggleDrawer(false)}
+      onKeyDown={toggleDrawer(false)}
+    >
+      <List>
+        <ListItem button component={Link} to="/HomePage">
+          <ListItemText primary="Home" />
+        </ListItem>
+        {pages.map((page) => (
+          <ListItem button component={Link} to={page.path} key={page.name}>
+            <ListItemText primary={page.name} />
+          </ListItem>
+        ))}
+        {isAuthenticated && (
+          <ListItem button component={Link} to="/userDashboard">
+            <ListItemText primary="User Dashboard" />
+          </ListItem>
+        )}
+        <ListItem button component={Link} to="/cart">
+          <ListItemText primary="Cart" />
+        </ListItem>
+        {isAuthenticated ? (
+          <ListItem button onClick={handleSignOut}>
+            <ListItemText primary="Logout" />
+          </ListItem>
+        ) : (
+          <>
+            <ListItem button component={Link} to="/signin">
+              <ListItemText primary="Sign In" />
+            </ListItem>
+            <ListItem button component={Link} to="/signup">
+              <ListItemText primary="Sign Up" />
+            </ListItem>
+          </>
+        )}
+      </List>
+    </Box>
+  );
 
   return (
     <AppBar
@@ -69,18 +100,12 @@ function NavbarLayout() {
       <Container maxWidth="lg">
         <Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <AdbIcon
-              sx={{
-                display: { xs: "none", md: "flex" },
-                mr: 1,
-                color: "white",
-              }}
-            />
+            <AdbIcon sx={{ mr: 1, color: "white" }} />
             <Typography
               variant="h6"
               noWrap
               component="a"
-              href="#"
+              href="/"
               sx={{
                 fontFamily: "monospace",
                 fontWeight: 700,
@@ -94,7 +119,25 @@ function NavbarLayout() {
             </Typography>
           </Box>
 
-          {/* Desktop view - Main Nav Links */}
+          {/* Mobile Menu Button */}
+          <Box sx={{ display: { xs: "flex", md: "none" } }}>
+            <Button
+              onClick={toggleDrawer(true)}
+              sx={{ color: "white" }}
+              aria-label="open drawer"
+            >
+              <MenuIcon />
+            </Button>
+            <Drawer
+              anchor="left"
+              open={drawerOpen}
+              onClose={toggleDrawer(false)}
+            >
+              {list()}
+            </Drawer>
+          </Box>
+
+          {/* Desktop Navigation Links */}
           <Box sx={{ display: { xs: "none", md: "flex" }, gap: 2, mr: 2 }}>
             <Button
               component={Link}
@@ -102,81 +145,57 @@ function NavbarLayout() {
               sx={{
                 color: "white",
                 fontSize: "1rem",
-                "&:hover": {
-                  backgroundColor: "rgba(255, 255, 255, 0.1)",
-                },
+                "&:hover": { backgroundColor: "rgba(255, 255, 255, 0.1)" },
               }}
             >
-              HomePage
+              Home
             </Button>
-            {isAuthenticated &&
-              pages.map((page) => (
-                <Button
-                  key={page.name}
-                  component={Link}
-                  to={page.path}
-                  sx={{
-                    color: "white",
-                    fontSize: "1rem",
-                    "&:hover": {
-                      backgroundColor: "rgba(255, 255, 255, 0.1)",
-                    },
-                  }}
-                >
-                  {page.name}
-                </Button>
-              ))}
-          </Box>
-
-          {/* Mobile view - Menu Icon */}
-          <Box
-            sx={{ display: { xs: "flex", md: "none" }, alignItems: "center" }}
-          >
-            <IconButton color="inherit" onClick={toggleMobileMenu}>
-              <MenuIcon />
-            </IconButton>
-          </Box>
-
-          {/* User Menu */}
-          {isAuthenticated ? (
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
-                <IconButton
-                  onClick={handleOpenUserMenu}
-                  sx={{ p: 0, border: "2px solid #fff" }}
-                >
-                  <Avatar alt="User Avatar" src="/static/images/avatar/2.jpg" />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
+            {pages.map((page) => (
+              <Button
+                key={page.name}
+                component={Link}
+                to={page.path}
+                sx={{
+                  color: "white",
+                  fontSize: "1rem",
+                  "&:hover": { backgroundColor: "rgba(255, 255, 255, 0.1)" },
                 }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography sx={{ textAlign: "center" }}>
-                      {setting === "Logout" ? (
-                        <span onClick={handleSignOut}>{setting}</span>
-                      ) : (
-                        setting
-                      )}
-                    </Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
+                {page.name}
+              </Button>
+            ))}
+            {isAuthenticated && (
+              <Button
+                component={Link}
+                to="/userDashboard"
+                sx={{
+                  color: "white",
+                  fontSize: "1rem",
+                  "&:hover": { backgroundColor: "rgba(255, 255, 255, 0.1)" },
+                }}
+              >
+                User Dashboard
+              </Button>
+            )}
+            {/* Cart button is always accessible */}
+            <Button
+              component={Link}
+              to="/cart"
+              sx={{
+                color: "white",
+                fontSize: "1rem",
+                "&:hover": { backgroundColor: "rgba(255, 255, 255, 0.1)" },
+              }}
+            >
+              Cart
+            </Button>
+          </Box>
+
+          {/* Authentication Links */}
+          {isAuthenticated ? (
+            <Button onClick={handleSignOut} sx={{ color: "white" }}>
+              Logout
+            </Button>
           ) : (
             <Box sx={{ display: { xs: "none", md: "flex" }, gap: 2 }}>
               <Button component={Link} to="/signin" sx={{ color: "white" }}>
@@ -187,50 +206,6 @@ function NavbarLayout() {
               </Button>
             </Box>
           )}
-
-          {/* Drawer for Mobile View */}
-          <Drawer anchor="left" open={mobileOpen} onClose={toggleMobileMenu}>
-            <Box
-              sx={{
-                width: 250,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "start",
-                padding: 2,
-              }}
-              role="presentation"
-              onClick={toggleMobileMenu}
-              onKeyDown={toggleMobileMenu}
-            >
-              <Button component={Link} to="/HomePage" sx={{ mb: 2 }}>
-                HomePage
-              </Button>
-              {isAuthenticated &&
-                pages.map((page) => (
-                  <Button
-                    key={page.name}
-                    component={Link}
-                    to={page.path}
-                    sx={{ mb: 2 }}
-                  >
-                    {page.name}
-                  </Button>
-                ))}
-              {!isAuthenticated && (
-                <>
-                  <Button component={Link} to="/signin" sx={{ mb: 2 }}>
-                    Sign In
-                  </Button>
-                  <Button component={Link} to="/signup" sx={{ mb: 2 }}>
-                    Sign Up
-                  </Button>
-                  <Button component={Link} to="/cart" sx={{ mb: 2 }}>
-                    Cart
-                  </Button>
-                </>
-              )}
-            </Box>
-          </Drawer>
         </Toolbar>
       </Container>
     </AppBar>

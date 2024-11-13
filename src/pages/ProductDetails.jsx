@@ -13,8 +13,8 @@ import {
 import { red } from "@mui/material/colors";
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { ProductContext } from "../context/productContext";
-import { getProductById } from "../services/productsService";
+import { ProductContext } from "../context/ProductContext";
+import { getProductById } from "../services/ProductsService";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -62,7 +62,6 @@ const ProductDetails = () => {
 
   return (
     <Container sx={{ mt: 4 }}>
-      {/* Promotional Banner */}
       <Box
         sx={{
           backgroundColor: red[500],
@@ -75,7 +74,6 @@ const ProductDetails = () => {
       </Box>
 
       <Grid container spacing={4} sx={{ mt: 2 }}>
-        {/* Image Section */}
         <Grid
           item
           xs={12}
@@ -89,9 +87,7 @@ const ProductDetails = () => {
           />
         </Grid>
 
-        {/* Details Section */}
         <Grid item xs={12} md={6}>
-          {/* Price and Discount */}
           <Box sx={{ display: "flex", alignItems: "baseline" }}>
             <Typography
               variant="h4"
@@ -121,7 +117,6 @@ const ProductDetails = () => {
             Price VAT included | Extra 1% off with coins
           </Typography>
 
-          {/* Product Title */}
           <Typography
             variant="h5"
             component="h1"
@@ -130,7 +125,6 @@ const ProductDetails = () => {
             {name || "Product not found"}
           </Typography>
 
-          {/* Rating and Reviews */}
           <Box sx={{ display: "flex", alignItems: "center", mt: 1 }}>
             <Rating value={rating || 0} readOnly precision={0.1} />
             <Typography variant="body2" color="text.secondary" sx={{ ml: 1 }}>
@@ -139,7 +133,6 @@ const ProductDetails = () => {
             </Typography>
           </Box>
 
-          {/* Description */}
           <Typography
             variant="body1"
             color="text.secondary"
@@ -150,7 +143,6 @@ const ProductDetails = () => {
 
           <Divider sx={{ my: 2 }} />
 
-          {/* Color Options */}
           {colorOptions && (
             <Box sx={{ mt: 2 }}>
               <Typography variant="body2" sx={{ fontWeight: "bold", mb: 1 }}>
@@ -175,7 +167,6 @@ const ProductDetails = () => {
             </Box>
           )}
 
-          {/* Add to Cart Button */}
           <Button
             variant="contained"
             color="primary"

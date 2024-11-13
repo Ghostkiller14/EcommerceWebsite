@@ -12,9 +12,8 @@ import {
 } from "@mui/material";
 import React, { useContext, useState } from "react";
 
+import { ProductContext } from "../../context/ProductContext";
 import AdminProducts from "./adminProducts/AdminProducts";
-import { ProductContext } from "../../context/productContext";
-import { toast } from "react-toastify";
 
 const ProductManagment = () => {
   const { createProduct, editProduct } = useContext(ProductContext);
@@ -37,16 +36,13 @@ const ProductManagment = () => {
     });
   };
 
-
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (formData.productId) {
-      const res = await editProduct(formData.productId, formData);
-      console.log(res);
+      await editProduct(formData.productId, formData);
     } else {
-      const res = await createProduct(formData);
-      console.log(res);
+      await createProduct(formData);
     }
 
     setFormData({
