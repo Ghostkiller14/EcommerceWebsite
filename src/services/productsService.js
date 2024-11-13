@@ -2,7 +2,6 @@ import axios from "axios";
 
 const baseURL = `https://sda-3-onsite-backend-teamwork-z6h7.onrender.com/api/v1/products`;
 
-
 export const getAllProducts = async (
   pageNumber = 1,
   pageSize = 5,
@@ -29,6 +28,7 @@ export const deleteProductById = async (id) => {
 
 export const addProduct = async (formData) => {
   const res = await axios.post(`${baseURL}`, formData);
+  console.log(res.data.data);
   return res.data.data;
 };
 

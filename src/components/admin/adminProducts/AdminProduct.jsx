@@ -6,15 +6,12 @@ import {
   CardMedia,
   Typography,
 } from "@mui/material";
-
 import React, { useContext, useState } from "react";
 import { ProductContext } from "../../../context/ProductContext";
 
 const AdminProduct = ({ product, onEditProduct }) => {
-  const { productId, name, price, quantity, description } = product;
-
+  const { productId, name, price, quantity, description, imageIDs } = product;
   const { deleteProducts } = useContext(ProductContext);
-
   const [showDetails, setShowDetails] = useState(false);
 
   const handleDeleteProduct = async (productId) => {
@@ -43,20 +40,21 @@ const AdminProduct = ({ product, onEditProduct }) => {
         component="img"
         alt={name}
         height="140"
-        image="/static/images/cards/contemplative-reptile.jpg"
+        image={imageIDs}
+        sx={{
+          objectFit: "cover", // Ensures the image covers the entire area
+        }}
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {name}
         </Typography>
-
         <Typography variant="body2" sx={{ color: "text.secondary" }}>
           {description}
         </Typography>
-        <Typography gutterBottom component="p" sx={{ color: "green" }}>
-          quantity: {quantity} $
+        <Typography gutterBottom component="p" sx={{ color: "black" }}>
+          Quantity: {quantity}
         </Typography>
-
         <Typography gutterBottom component="p" sx={{ color: "green" }}>
           Price: {price} $
         </Typography>

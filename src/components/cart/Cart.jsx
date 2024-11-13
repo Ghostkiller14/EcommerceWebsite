@@ -101,7 +101,7 @@ const Cart = () => {
                     borderRadius: 1,
                     marginRight: 2,
                   }}
-                  image={item.image}
+                  image={item.imageIDs}
                   alt={item.name}
                 />
                 <CardContent sx={{ flex: "1" }}>

@@ -57,11 +57,11 @@ const ProductDetails = () => {
     reviewsCount,
     salesCount,
     colorOptions,
-    imageUrl,
+    imageIDs,
   } = productDetails;
 
   return (
-    <Container sx={{ mt: 4 }}>
+    <Container sx={{ mt: 4,marginTop:12 }}>
       <Box
         sx={{
           backgroundColor: red[500],
@@ -81,7 +81,7 @@ const ProductDetails = () => {
           sx={{ display: "flex", justifyContent: "center" }}
         >
           <img
-            src={imageUrl || "https://via.placeholder.com/300"}
+            src={imageIDs || "https://via.placeholder.com/300"}
             alt={name || "Product Image"}
             style={{ maxWidth: "100%", height: "auto", borderRadius: 4 }}
           />

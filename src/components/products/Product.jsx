@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { CartContext } from "../../context/CartContext";
 
 const Product = ({ product }) => {
-  const { productId, name, price, quantity, description } = product;
+  const { productId, name, price, description, imageIDs } = product;
 
   const { addToCart } = useContext(CartContext);
   const navigate = useNavigate();
@@ -26,19 +26,26 @@ const Product = ({ product }) => {
           maxWidth: 345,
           marginBottom: 1.5,
           border: 1,
-          borderColor: "grey.300", // Set border color
-          transition: "0.3s", // Smooth transition for hover effect
+          borderColor: "grey.300",
+          transition: "0.3s",
           "&:hover": {
-            boxShadow: 6, // Apply shadow on hover
-            transform: "scale(1.02)", // Slightly enlarge on hover
+            boxShadow: 6,
+            transform: "scale(1.02)",
           },
         }}
       >
         <CardMedia
           component="img"
-          alt="green iguana"
-          height="140"
-          image="/static/images/cards/contemplative-reptile.jpg"
+          alt={name}
+          image={imageIDs}
+          sx={{
+            height: 140,
+            objectFit: "contain", // Change from "cover" to "contain" to fit the image inside the card
+            width: "100%",
+            backgroundSize: "contain", // Ensure the image scales down to fit within the card
+            backgroundRepeat: "no-repeat", // Prevent background repeat
+            backgroundPosition: "center", // Center the image
+          }}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
@@ -62,7 +69,7 @@ const Product = ({ product }) => {
             Add To Cart
           </Button>
           <Button size="small" onClick={() => showPageDetails(productId)}>
-            show Details
+            Show Details
           </Button>
         </CardActions>
       </Card>

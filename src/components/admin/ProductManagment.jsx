@@ -133,10 +133,9 @@ const ProductManagment = () => {
                 value={formData.categoryId}
                 onChange={handleChange}
               >
-                <MenuItem value="db5eb9c6-c2e3-4348-928a-1732ebe203cb">
+                <MenuItem value="79f1486e-132f-4bc4-8adb-dc5d742baf33">
                   Electronics
                 </MenuItem>
-                {/* Add more categories here */}
               </TextField>
               <Button
                 variant="contained"
