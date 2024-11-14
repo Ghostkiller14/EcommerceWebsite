@@ -13,7 +13,7 @@ import {
 import React, { useContext, useState } from "react";
 
 import { ProductContext } from "../../context-bak/ProductContext";
-import AdminProducts from "./adminProducts/AdminProducts";
+import AdminProducts from "./adminProduct-bak/AdminProducts";
 
 const ProductManagment = () => {
   const { createProduct, editProduct } = useContext(ProductContext);

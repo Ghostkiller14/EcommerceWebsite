@@ -115,7 +115,7 @@ function NavbarLayout() {
                 mr: 2,
               }}
             >
-              LOGO
+              AlalawiExpress
             </Typography>
           </Box>
 

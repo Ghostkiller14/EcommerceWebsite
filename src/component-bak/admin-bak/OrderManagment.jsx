@@ -1,5 +1,5 @@
 import React from "react";
-import Orders from "./adminOrder/Orders";
+import Orders from "./adminOrder-bak/Orders";
 
 const OrderManagment = () => {
   return (

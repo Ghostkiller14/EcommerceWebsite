@@ -2,7 +2,7 @@ import { Add } from "@mui/icons-material";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import React, { useContext, useState } from "react";
 import { CategoryContext } from "../../context-bak/CategoryContext";
-import AdminCategories from "./adminCategories/AdminCategories";
+import AdminCategories from "./adminCategories-bak/AdminCategories";
 
 const CategoryManagment = () => {
   const { addCategoryByName, updateCategoryName } = useContext(CategoryContext);

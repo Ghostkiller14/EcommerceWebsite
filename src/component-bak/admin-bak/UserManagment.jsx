@@ -1,5 +1,5 @@
 import React from "react";
-import AdminUsers from "./adminUsers/AdminUsers";
+import AdminUsers from "./adminUsers-bak/AdminUsers";
 
 const UserManagment = () => {
   return (
