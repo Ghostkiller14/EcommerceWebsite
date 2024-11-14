@@ -2,7 +2,7 @@ import { Box, Grid } from "@mui/material";
 import React, { useContext } from "react";
 
 import { CategoryContext } from "../../../context-bak/CategoryContext";
-import AdminCategory from "./AdminCategory";
+import AdminCategory from "./AdminCategory-bak";
 
 const AdminCategories = ({ onEditCategory }) => {
   const { categories } = useContext(CategoryContext);

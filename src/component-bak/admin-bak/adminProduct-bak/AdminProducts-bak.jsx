@@ -1,7 +1,7 @@
 import { Box, Grid, Pagination } from "@mui/material";
 import React, { useContext } from "react";
 import { ProductContext } from "../../../context-bak/ProductContext";
-import AdminProduct from "./AdminProduct";
+import AdminProduct from "./AdminProduct-bak";
 
 const AdminProducts = ({ onEditProduct }) => {
   const { products, pageNumber, setPageNumber, totalPages } =

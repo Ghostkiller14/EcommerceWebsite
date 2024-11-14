@@ -2,12 +2,12 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import CategoryManagment from "./component-bak/admin-bak/CategoryManagment";
-import OrderManagment from "./component-bak/admin-bak/OrderManagment";
-import ProductManagment from "./component-bak/admin-bak/ProductManagment";
-import UserManagment from "./component-bak/admin-bak/UserManagment";
+import CategoryManagment from "./component-bak/admin-bak/CategoryManagment-bak";
+import OrderManagment from "./component-bak/admin-bak/OrderManagment-bak";
+import ProductManagment from "./component-bak/admin-bak/ProductManagment-bak";
+import UserManagment from "./component-bak/admin-bak/UserManagment-bak";
 
-import Cart from "./component-bak/cart/Cart";
+import Cart from "./component-bak/cart/Cart-bak";
 import { CartProvider } from "./context-bak/CartContext";
 
 import { CategoryProvider } from "./context-bak/CategoryContext";

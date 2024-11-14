@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid2";
 import React, { useContext } from "react";
 import { ProductContext } from "../../context-bak/ProductContext";
-import Product from "./product";
+import Product from "./Product-bak";
 
 const Products = () => {
   const { error, isLoading, products, pageNumber, setPageNumber, totalPages } =
