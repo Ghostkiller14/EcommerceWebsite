@@ -1,9 +1,9 @@
 import { Box, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import React from "react";
-import Products from "../components/products/Products";
-import Search from "../components/Search";
-import Sorting from "../components/Sorting";
+import Products from "../component-bak/products/Products";
+import Search from "../component-bak/Search";
+import Sorting from "../component-bak/Sorting";
 
 const HomePage = () => {
   return (

@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context-bak/UserContext";
-import { getUserInfo } from "../services/UserService";
+import { getUserInfo } from "../service-bak/UserService";
 
 const UserDashboard = () => {
   const { updateUser, getUserById, deleteUser } = useContext(UserContext);

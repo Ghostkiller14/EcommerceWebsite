@@ -4,7 +4,7 @@ import {
   getAllUsers,
   getUserInfo,
   updateUserInfo,
-} from "../services/UserService";
+} from "../service-bak/UserService";
 
 export const UserContext = createContext();
 

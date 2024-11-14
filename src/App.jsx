@@ -2,26 +2,26 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import CategoryManagment from "./components/admin/CategoryManagment";
-import OrderManagment from "./components/admin/OrderManagment";
-import ProductManagment from "./components/admin/ProductManagment";
-import UserManagment from "./components/admin/UserManagment";
+import CategoryManagment from "./component-bak/admin/CategoryManagment";
+import OrderManagment from "./component-bak/admin/OrderManagment";
+import ProductManagment from "./component-bak/admin/ProductManagment";
+import UserManagment from "./component-bak/admin/UserManagment";
 
-import Cart from "./components/cart/Cart";
+import Cart from "./component-bak/cart/Cart";
 import { CartProvider } from "./context-bak/CartContext";
 
 import { CategoryProvider } from "./context-bak/CategoryContext";
 import { OrderProvider } from "./context-bak/OrderContext";
 import { ProductProvider } from "./context-bak/ProductContext";
 import { UserProvider } from "./context-bak/UserContext";
-import Layout from "./layout/Layout";
-import AdminDashboard from "./pages/AdminDashboard";
-import HomePage from "./pages/HomePage";
-import ProductDetails from "./pages/ProductDetails";
-import SignIn from "./pages/SignIn";
-import SignUp from "./pages/signUp";
-import UserDashboard from "./pages/UserDashboard";
-import AdminRoute from "./Routes/AdminRoute";
+import Layout from "./layout-bak/Layout";
+import AdminDashboard from "./pages-bak/AdminDashboard";
+import HomePage from "./pages-bak/HomePage";
+import ProductDetails from "./pages-bak/ProductDetails";
+import SignIn from "./pages-bak/SignIn";
+import SignUp from "./pages-bak/SignUp";
+import UserDashboard from "./pages-bak/UserDashboard";
+import AdminRoute from "./routes-bak/AdminRoute";
 
 function App() {
   const router = createBrowserRouter([

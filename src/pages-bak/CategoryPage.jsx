@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 
-import Categories from "../components/categories/Categories";
+import Categories from "../component-bak/categories/Categories";
 import { CategoryContext } from "../context/categoryContext";
 
 const CategoryPage = () => {

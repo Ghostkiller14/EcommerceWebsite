@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { register } from "../services/AuthService";
+import { register } from "../service-bak/AuthService";
 
 const SignUp = () => {
   const navigate = useNavigate();

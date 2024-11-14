@@ -14,7 +14,7 @@ import { red } from "@mui/material/colors";
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ProductContext } from "../context-bak/ProductContext";
-import { getProductById } from "../services/ProductsService";
+import { getProductById } from "../service-bak/ProductsService";
 
 const ProductDetails = () => {
   const { id } = useParams();
