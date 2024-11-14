@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useContext } from "react";
-import { UserContext } from "../../../context/UserContext";
+import { UserContext } from "../../../context-bak/UserContext";
 
 const AdminUser = ({ user }) => {
   const { userId, userName, email, address, age } = user;
@@ -16,8 +16,7 @@ const AdminUser = ({ user }) => {
   const { deleteUser } = useContext(UserContext);
 
   const onDelete = async (id) => {
-     await deleteUser(id);
-
+    await deleteUser(id);
   };
 
   return (

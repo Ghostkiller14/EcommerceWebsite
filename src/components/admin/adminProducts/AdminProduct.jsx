@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useContext, useState } from "react";
-import { ProductContext } from "../../../context/ProductContext";
+import { ProductContext } from "../../../context-bak/ProductContext";
 
 const AdminProduct = ({ product, onEditProduct }) => {
   const { productId, name, price, quantity, description, imageIDs } = product;

@@ -13,7 +13,7 @@ import {
 import { red } from "@mui/material/colors";
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { ProductContext } from "../context/ProductContext";
+import { ProductContext } from "../context-bak/ProductContext";
 import { getProductById } from "../services/ProductsService";
 
 const ProductDetails = () => {
@@ -61,7 +61,7 @@ const ProductDetails = () => {
   } = productDetails;
 
   return (
-    <Container sx={{ mt: 4,marginTop:12 }}>
+    <Container sx={{ mt: 4, marginTop: 12 }}>
       <Box
         sx={{
           backgroundColor: red[500],

@@ -10,10 +10,10 @@ import UserManagment from "./components/admin/UserManagment";
 import Cart from "./components/cart/Cart";
 import { CartProvider } from "./context-bak/CartContext";
 
-import { CategoryProvider } from "./context/CategoryContext";
-import { OrderProvider } from "./context/OrderContext";
-import { ProductProvider } from "./context/ProductContext";
-import { UserProvider } from "./context/UserContext";
+import { CategoryProvider } from "./context-bak/CategoryContext";
+import { OrderProvider } from "./context-bak/OrderContext";
+import { ProductProvider } from "./context-bak/ProductContext";
+import { UserProvider } from "./context-bak/UserContext";
 import Layout from "./layout/Layout";
 import AdminDashboard from "./pages/AdminDashboard";
 import HomePage from "./pages/HomePage";

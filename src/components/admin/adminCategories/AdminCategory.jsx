@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import React, { useContext } from "react";
 
-import { CategoryContext } from "../../../context/CategoryContext";
+import { CategoryContext } from "../../../context-bak/CategoryContext";
 
 const AdminCategory = ({ category, onEditCategory }) => {
   const { categoryId, name } = category;
