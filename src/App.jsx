@@ -1,27 +1,25 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-import CategoryManagment from "./component-bak/admin-bak/CategoryManagment-bak";
-import OrderManagment from "./component-bak/admin-bak/OrderManagment-bak";
-import ProductManagment from "./component-bak/admin-bak/ProductManagment-bak";
-import UserManagment from "./component-bak/admin-bak/UserManagment-bak";
-
-import Cart from "./component-bak/cart/Cart-bak";
-import { CartProvider } from "./context-bak/CartContext";
-
-import { CategoryProvider } from "./context-bak/CategoryContext";
-import { OrderProvider } from "./context-bak/OrderContext";
-import { ProductProvider } from "./context-bak/ProductContext";
-import { UserProvider } from "./context-bak/UserContext";
-import Layout from "./layout-bak/Layout";
-import AdminDashboard from "./pages-bak/AdminDashboard";
-import HomePage from "./pages-bak/HomePage";
-import ProductDetails from "./pages-bak/ProductDetails";
-import SignIn from "./pages-bak/SignIn";
-import SignUp from "./pages-bak/SignUp";
-import UserDashboard from "./pages-bak/UserDashboard";
-import AdminRoute from "./routes-bak/AdminRoute";
+import CategoryManagment from "./component/admin/CategoryManagment";
+import OrderManagment from "./component/admin/OrderManagment";
+import ProductManagment from "./component/admin/ProductManagment";
+import UserManagment from "./component/admin/UserManagment";
+import Cart from "./component/cart/Cart";
+import { CartProvider } from "./context/CartContext";
+import { CategoryProvider } from "./context/CategoryContext";
+import { OrderProvider } from "./context/OrderContext";
+import { ProductProvider } from "./context/ProductContext";
+import { UserProvider } from "./context/UserContext";
+import Layout from "./layout/Layout";
+import AdminDashboard from "./pages/AdminDashboard";
+import HomePage from "./pages/HomePage";
+import ProductDetails from "./pages/ProductDetails";
+import ProductPage from "./pages/ProductPage";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
+import UserDashboard from "./pages/UserDashboard";
+import AdminRoute from "./routes/AdminRoute";
 
 function App() {
   const router = createBrowserRouter([
@@ -30,8 +28,12 @@ function App() {
       element: <Layout />,
       children: [
         {
-          path: "/HomePage",
+          path: "/",
           element: <HomePage />,
+        },
+        {
+          path: "/ProductPage",
+          element: <ProductPage />,
         },
         {
           path: "/HomePage/:id",
